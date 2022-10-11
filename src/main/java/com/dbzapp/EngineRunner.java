@@ -11,47 +11,37 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Runner class to demonstrate Debezium Embedded engine in a class.
+ * 
+ * @author Sumukh Phalgaonkar, Vaibhav Kushwaha (vkushwaha@yugabyte.com)
+ */
 public class EngineRunner {
   private CmdLineOpts config;
+
   public EngineRunner(CmdLineOpts config) {
     this.config = config;
   }
 
-  public void run() throws IOException {
-    final Properties props = config.asProperties();//new Properties();
+  public void run() throws Exception {
+    final Properties props = config.asProperties();
     props.setProperty("name", "engine");
     props.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
     props.setProperty("offset.storage.file.filename", "/tmp/offsets.dat");
     props.setProperty("offset.flush.interval.ms", "60000");
-    props.setProperty("connector.class", "io.debezium.connector.yugabytedb.YugabyteDBConnector");
-    /* begin connector properties */
-    props.setProperty("database.hostname", "yugabyte");
-    props.setProperty("database.port", "5433");
-    props.setProperty("database.user", "yugabyte");
-    props.setProperty("database.password", "yugabyte");
-    // props.setProperty("database.server.id", "85744");
-    props.setProperty("database.server.name", "dbserver1");
-
-    // props.setProperty("database.history",
-    //      "io.debezium.relational.history.FileDatabaseHistory");
-    // props.setProperty("database.history.file.filename",
-    //      "/path/to/storage/dbhistory.dat");
-
+    
     // Create the engine with this configuration ...
-    System.out.println("Before Engine start");
     try (DebeziumEngine<ChangeEvent<String, String>> engine = DebeziumEngine.create(Json.class)
             .using(props)
             .notifying(record -> {
                 System.out.println(record);
-                System.out.println("Inside notifying record");
             }).build()
         ) {
-    // Run the engine asynchronously ...
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    executor.execute(engine);
-    System.out.println("After notifying ");
-
-    // Do something else or wait for a signal or an event
-}
+      // Run the engine asynchronously ...
+      ExecutorService executor = Executors.newSingleThreadExecutor();
+      executor.execute(engine);
+    } catch (Exception e) {
+      throw e;
+    }
   }
 }
