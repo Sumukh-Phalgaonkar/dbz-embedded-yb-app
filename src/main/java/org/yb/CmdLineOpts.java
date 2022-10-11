@@ -1,5 +1,7 @@
 package org.yb;
 
+import java.util.Properties;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -52,5 +54,13 @@ public class CmdLineOpts {
       tableIncludeList = commandLine.getOptionValue("table_include_list");
     }
   }
-  
+
+  public Properties asProperties() {
+    Properties props = new Properties();
+    props.setProperty("database.streamid", streamId);
+    props.setProperty("database.master.address", masterAddresses+":7100");
+    props.setProperty("table.include.list", tableIncludeList);
+    return props;
+  }
+
 }
