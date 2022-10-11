@@ -1,4 +1,4 @@
-package org.yb;
+package com.dbzapp;
 
 import io.debezium.connector.yugabytedb.*;
 import io.debezium.engine.ChangeEvent;

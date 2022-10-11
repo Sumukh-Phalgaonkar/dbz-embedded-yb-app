@@ -1,4 +1,4 @@
-package org.yb;
+package com.dbzapp;
 
 import java.util.Properties;
 
