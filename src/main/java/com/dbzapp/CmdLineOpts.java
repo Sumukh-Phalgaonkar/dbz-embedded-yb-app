@@ -1,14 +1,22 @@
-package org.yb;
+package com.dbzapp;
+
+import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 
+/**
+ * Helper class to parse the command line options.
+ * 
+ * @author Sumukh Phalgaonkar, Vaibhav Kushwaha (vkushwaha@yugabyte.com)
+ */
 public class CmdLineOpts {
+  private final String connectorClass = "io.debezium.connector.yugabytedb.YugabyteDBConnector";
   public String masterAddresses;
   public String hostname;
-  public int databasePort = 5433;
+  public String databasePort = "5433";
   public String streamId;
   public String tableIncludeList;
   public String databaseName = "yugabyte";
@@ -19,9 +27,10 @@ public class CmdLineOpts {
   public static CmdLineOpts createFromArgs(String[] args) {
     Options options = new Options();
 
-    options.addOption("master_addresses", true, "help string");
-    options.addOption("stream_id", true, "help string");
-    options.addOption("table_include_list", true, "help string");
+    options.addOption("master_addresses", true, "Addresses of the master process");
+    options.addOption("stream_id", true, "DB stream ID");
+    options.addOption("table_include_list", true, "The table list to poll for in the form"
+                      + " <schemaName>.<tableName>");
 
     CommandLineParser parser = new DefaultParser();
     CommandLine commandLine = null;
@@ -52,5 +61,23 @@ public class CmdLineOpts {
       tableIncludeList = commandLine.getOptionValue("table_include_list");
     }
   }
-  
+
+  public Properties asProperties() {
+    Properties props = new Properties();
+    props.setProperty("connector.class", connectorClass);
+
+    props.setProperty("database.streamid", streamId);
+    props.setProperty("database.master.addresses", masterAddresses);
+    props.setProperty("table.include.list", tableIncludeList);
+    props.setProperty("database.hostname", hostname);
+    props.setProperty("database.port", databasePort);
+    props.setProperty("database.user", databaseUser);
+    props.setProperty("database.password", databasePassword);
+    props.setProperty("database.dbname", databaseName);
+    props.setProperty("database.server.name", "dbserver1");
+    props.setProperty("snapshot.mode", snapshotMode);
+
+    return props;
+  }
+
 }
