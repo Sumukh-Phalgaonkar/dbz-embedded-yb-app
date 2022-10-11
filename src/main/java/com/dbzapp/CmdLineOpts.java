@@ -58,7 +58,7 @@ public class CmdLineOpts {
   public Properties asProperties() {
     Properties props = new Properties();
     props.setProperty("database.streamid", streamId);
-    props.setProperty("database.master.address", masterAddresses+":7100");
+    props.setProperty("database.master.addresses", masterAddresses);
     props.setProperty("table.include.list", tableIncludeList);
     return props;
   }

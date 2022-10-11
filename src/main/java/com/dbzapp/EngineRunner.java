@@ -38,15 +38,18 @@ public class EngineRunner {
     //      "/path/to/storage/dbhistory.dat");
 
     // Create the engine with this configuration ...
+    System.out.println("Before Engine start");
     try (DebeziumEngine<ChangeEvent<String, String>> engine = DebeziumEngine.create(Json.class)
             .using(props)
             .notifying(record -> {
                 System.out.println(record);
+                System.out.println("Inside notifying record");
             }).build()
         ) {
     // Run the engine asynchronously ...
     ExecutorService executor = Executors.newSingleThreadExecutor();
     executor.execute(engine);
+    System.out.println("After notifying ");
 
     // Do something else or wait for a signal or an event
 }
