@@ -23,6 +23,7 @@ public class EngineRunner {
     props.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
     props.setProperty("offset.storage.file.filename", "/tmp/offsets.dat");
     props.setProperty("offset.flush.interval.ms", "60000");
+    props.setProperty("connector.class", "io.debezium.connector.yugabytedb.YugabyteDBConnector");
     /* begin connector properties */
     props.setProperty("database.hostname", "yugabyte");
     props.setProperty("database.port", "5433");
