@@ -12,10 +12,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
 
-    <version.assembly.plugin>3.4.1</version.assembly.plugin>
+    <version.compiler.plugin>3.8.1</version.compiler.plugin>
+    <version.assembly.plugin>3.3.0</version.assembly.plugin>
     <version.s3.wagon>0.1.3</version.s3.wagon>
     <version.debezium>1.7.0.Final</version.debezium>
     <version.debezium.yb>1.7.0.11-BETA</version.debezium.yb>
@@ -173,6 +174,16 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${version.compiler.plugin}</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
