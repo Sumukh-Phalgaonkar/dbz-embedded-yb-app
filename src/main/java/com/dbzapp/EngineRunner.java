@@ -6,8 +6,6 @@ import io.debezium.engine.DebeziumEngine;
 import io.debezium.engine.format.Json;
 
 import org.apache.kafka.connect.json.*;
-
-import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +37,7 @@ public class EngineRunner {
                     System.out.println(record);
                     committer.markProcessed((record));
                 }
+                committer.markBatchFinished();
             }).build()
         ) {
       // Run the engine asynchronously ...
