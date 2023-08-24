@@ -6,6 +6,7 @@ import io.debezium.engine.DebeziumEngine;
 import io.debezium.engine.format.Json;
 
 import org.apache.kafka.connect.json.*;
+
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
@@ -29,12 +30,15 @@ public class EngineRunner {
     props.setProperty("offset.storage", "org.apache.kafka.connect.storage.FileOffsetBackingStore");
     props.setProperty("offset.storage.file.filename", "/tmp/offsets.dat");
     props.setProperty("offset.flush.interval.ms", "60000");
-    
+
     // Create the engine with this configuration ...
     try (DebeziumEngine<ChangeEvent<String, String>> engine = DebeziumEngine.create(Json.class)
             .using(props)
-            .notifying(record -> {
-                System.out.println(record);
+            .notifying((records, committer) -> {
+                for(ChangeEvent<String, String> record: records){
+                    System.out.println(record);
+                    committer.markProcessed((record));
+                }
             }).build()
         ) {
       // Run the engine asynchronously ...
