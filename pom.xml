@@ -23,8 +23,8 @@
     <version.resources.plugin>3.1.0</version.resources.plugin>
 
     <version.s3.wagon>0.1.3</version.s3.wagon>
-    <version.debezium>1.7.0.Final</version.debezium>
-    <version.debezium.yb>1.7.0.11-BETA</version.debezium.yb>
+    <version.debezium>1.9.5.Final</version.debezium>
+    <version.debezium.yb-connector>1.9.5.y.33</version.debezium.yb-connector>
   </properties>
 
   <repositories>
@@ -90,9 +90,9 @@
         <version>${version.debezium}</version>
     </dependency>
     <dependency>
-        <groupId>org.yb</groupId>
+        <groupId>io.debezium</groupId>
         <artifactId>debezium-connector-yugabytedb</artifactId>
-        <version>${version.debezium.yb}</version>
+        <version>${version.debezium.yb-connector}</version>
     </dependency>
 
     <dependency>

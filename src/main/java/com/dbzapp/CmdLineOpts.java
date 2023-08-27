@@ -20,7 +20,7 @@ public class CmdLineOpts {
   public String streamId;
   public String tableIncludeList;
   public String databaseName = "yugabyte";
-  public String databasePassword = "yugabyte";
+  public String databasePassword = "Yugabyte@123";
   public String databaseUser = "yugabyte";
   public String snapshotMode = "never";
 
